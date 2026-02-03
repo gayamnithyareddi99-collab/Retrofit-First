@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrofit-First | AI Retrofit Feasibility Engine</title>
+
+<style>
+:root{
+  --primary:#0f766e;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --text:#0f172a;
+  --muted:#475569;
+  --white:#ffffff;
+  --border:#e5e7eb;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+
+/* ================= NAVBAR ================= */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:72px;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8%;
+  z-index:1000;
+}
+
+.logo{
+  font-weight:800;
+  letter-spacing:0.5px;
+  color:var(--secondary);
+}
+
+.menu{
+  list-style:none;
+  display:flex;
+  gap:28px;
+}
+
+.menu a{
+  text-decoration:none;
+  color:var(--secondary);
+  font-weight:600;
+}
+
+.toggle{
+  display:none;
+  flex-direction:column;
+  cursor:pointer;
+}
+.toggle span{
+  width:26px;
+  height:3px;
+  background:var(--secondary);
+  margin:4px 0;
+}
+
+/* ================= HERO ================= */
+.hero{
+  padding:140px 8% 100px;
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:60px;
+  align-items:center;
+  background:linear-gradient(180deg,#ffffff,#e6f4f1);
+}
+
+.hero h1{
+  font-size:46px;
+  margin-bottom:18px;
+}
+
+.hero h1 span{
+  color:var(--primary);
+}
+
+.hero p{
+  font-size:18px;
+  max-width:560px;
+  color:var(--muted);
+}
+
+.cta{
+  margin-top:30px;
+  padding:16px 42px;
+  background:var(--secondary);
+  color:var(--white);
+  border:none;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 18px 40px rgba(15,23,42,0.35);
+}
+
+.hero-image{
+  position:relative;
+  padding:4px;
+  border-radius:28px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+}
+
+.hero-image img{
+  width:100%;
+  border-radius:24px;
+  display:block;
+}
+
+/* ================= SECTIONS ================= */
+section{
+  padding:110px 8%;
+}
+
+section h2{
+  font-size:40px;
+  margin-bottom:22px;
+}
+
+.section-intro{
+  max-width:800px;
+  font-size:18px;
+  color:var(--muted);
+  margin-bottom:70px;
+}
+
+/* ================= ABOUT ================= */
+.about{
+  background:var(--white);
+}
+
+/* ================= HOW IT WORKS ================= */
+.how{
+  background:var(--secondary);
+  color:var(--white);
+}
+
+.how-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:40px;
+}
+
+.how-card{
+  background:#ffffff;
+  color:#000;
+  border-radius:26px;
+  padding:34px;
+  text-align:center;
+  transition:0.4s;
+}
+
+.how-card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:18px;
+  margin-bottom:24px;
+}
+
+.how-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 30px 70px rgba(34,197,94,0.45);
+}
+
+/* ================= FEATURES ================= */
+.features{
+  background:#f1f5f9;
+}
+
+.feature{
+  padding:26px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.feature h4{
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+/* ================= AI SECTION ================= */
+.ai{
+  background:linear-gradient(180deg,#0f172a,#020617);
+  color:#e5e7eb;
+  text-align:center;
+}
+
+.ai p{
+  max-width:860px;
+  margin:0 auto 26px;
+  font-size:19px;
+}
+
+/* ================= CONTACT ================= */
+.contact{
+  background:linear-gradient(180deg,#ffffff,#e6f4f1);
+  text-align:center;
+}
+
+.contact a{
+  display:inline-block;
+  margin-top:30px;
+  padding:18px 54px;
+  background:var(--primary);
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:800;
+  border-radius:999px;
+  box-shadow:0 18px 50px rgba(15,118,110,0.45);
+}
+
+/* ================= FOOTER ================= */
+footer{
+  background:#020617;
+  color:#94a3b8;
+  text-align:center;
+  padding:22px;
+  font-size:14px;
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero h1{font-size:34px;}
+  .toggle{display:flex;}
+  .menu{
+    position:absolute;
+    top:72px;
+    left:0;
+    width:100%;
+    background:#ffffff;
+    flex-direction:column;
+    align-items:center;
+    display:none;
+  }
+  .menu.show{display:flex;}
+  .menu li{
+    width:100%;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+  .menu a{
+    padding:16px 0;
+    display:block;
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const toggle = document.getElementById("toggle");
+  const menu = document.getElementById("menu");
+
+  toggle.addEventListener("click",()=>{
+    menu.classList.toggle("show");
+  });
+
+  document.querySelectorAll(".menu a").forEach(link=>{
+    link.addEventListener("click",()=>{
+      menu.classList.remove("show");
+    });
+  });
+});
+</script>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="logo">Retrofit-First</div>
+  <div class="toggle" id="toggle">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="menu" id="menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#ai">AI Engine</a></li>
+    <li><a href="#pilot-contact">Contact</a></li>
+
+  </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-home" id="home">
+  <div class="hero-content">
+
+    <h1>
+      AI-Driven <span>Retrofit Feasibility</span><br>
+      For Real UK Housing, Not Assumptions
+    </h1>
+
+    <p class="hero-lead">
+      Retrofit-First is a decision intelligence platform that turns
+      complex retrofit standards into clear, auditable plans.
+      Generate PAS-2035 aligned, whole-house feasibility outputs
+      in minutes built for UK assessors, councils, housing
+      associations, and lenders working at scale.
+    </p>
+
+
+    <button class="hero-cta">
+      <span>Request Pilot Access</span>
+    </button>
+
+  </div>
+
+  <div class="hero-visual">
+    <div class="glow-frame">
+      <img src="010.jpeg" alt="UK retrofit buildings">
+    </div>
+  </div>
+</section>
+
+<style>
+/* =========================
+   HERO – CLEAN + INTELLIGENT
+   ========================= */
+
+.hero-home{
+  padding:170px 8% 130px;
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:80px;
+  align-items:center;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(34,197,94,0.16), transparent 46%),
+    radial-gradient(circle at 82% 28%, rgba(15,118,110,0.22), transparent 48%),
+    linear-gradient(180deg,#ffffff,#edf7f4);
+  position:relative;
+  overflow:hidden;
+}
+
+/* ambient travelling light */
+.hero-home::before{
+  content:"";
+  position:absolute;
+  inset:-45%;
+  background:conic-gradient(
+    transparent,
+    rgba(34,197,94,0.12),
+    transparent 30%
+  );
+  animation:ambientSpin 24s linear infinite;
+  z-index:0;
+}
+
+/* slow floating glow */
+.hero-home::after{
+  content:"";
+  position:absolute;
+  top:12%;
+  left:28%;
+  width:460px;
+  height:460px;
+  background:radial-gradient(
+    circle,
+    rgba(34,197,94,0.18),
+    transparent 65%
+  );
+  filter:blur(50px);
+  animation:floatGlow 9s ease-in-out infinite;
+  z-index:0;
+}
+
+/* ================= TEXT ================= */
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.hero-content h1{
+  font-size:50px;
+  line-height:1.15;
+  color:#0f172a;
+  margin-bottom:26px;
+}
+
+.hero-content h1 span{
+  color:#0f766e;
+  position:relative;
+}
+
+/* intelligent underline */
+.hero-content h1 span::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-8px;
+  width:100%;
+  height:4px;
+  background:linear-gradient(90deg,#22c55e,#0f766e);
+  border-radius:6px;
+  box-shadow:0 0 20px rgba(34,197,94,0.75);
+}
+
+.hero-lead{
+  font-size:19px;
+  max-width:620px;
+  color:#334155;
+  margin-bottom:18px;
+}
+
+.hero-sub{
+  font-size:17.5px;
+  color:#475569;
+  max-width:560px;
+}
+
+/* ================= CTA BUTTON ================= */
+.hero-cta{
+  margin-top:46px;
+  padding:18px 58px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#020617,#0f766e);
+  color:#ffffff;
+  font-size:16.8px;
+  font-weight:800;
+  letter-spacing:0.6px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  border:2px solid rgba(34,197,94,0.75);
+
+  box-shadow:
+    0 22px 60px rgba(15,23,42,0.45),
+    0 0 40px rgba(34,197,94,0.45);
+
+  transition:0.45s ease;
+}
+
+/* travelling energy ring */
+.hero-cta::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:999px;
+  background:conic-gradient(
+    transparent,
+    rgba(34,197,94,0.95),
+    transparent 28%
+  );
+  animation:ringSpin 2.1s linear infinite;
+  z-index:0;
+}
+
+/* travelling light sweep */
+.hero-cta::after{
+  content:"";
+  position:absolute;
+  top:-10%;
+  left:-160%;
+  width:60%;
+  height:120%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.95),
+    transparent
+  );
+  animation:ctaSweep 1.8s ease-in-out infinite;
+  z-index:1;
+}
+
+.hero-cta span{
+  position:relative;
+  z-index:2;
+}
+
+.hero-cta:hover{
+  transform:translateY(-5px) scale(1.06);
+  box-shadow:
+    0 36px 95px rgba(34,197,94,0.75),
+    0 0 80px rgba(34,197,94,0.9);
+}
+
+/* ================= IMAGE ================= */
+.hero-visual{
+  position:relative;
+  z-index:2;
+}
+
+.glow-frame{
+  position:relative;
+  padding:6px;
+  border-radius:32px;
+  background:#020617;
+  overflow:hidden;
+}
+
+/* travelling image border */
+.glow-frame::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:36px;
+  background:conic-gradient(
+    transparent,
+    rgba(34,197,94,0.95),
+    transparent 30%
+  );
+  animation:borderSpin 2.6s linear infinite;
+}
+
+/* soft outer glow */
+.glow-frame::after{
+  content:"";
+  position:absolute;
+  inset:-28px;
+  background:radial-gradient(
+    circle,
+    rgba(34,197,94,0.5),
+    transparent 70%
+  );
+  z-index:0;
+}
+
+.glow-frame img{
+  width:100%;
+  display:block;
+  border-radius:26px;
+  position:relative;
+  z-index:1;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes ambientSpin{
+  100%{ transform:rotate(360deg); }
+}
+@keyframes ringSpin{
+  100%{ transform:rotate(360deg); }
+}
+@keyframes borderSpin{
+  100%{ transform:rotate(360deg); }
+}
+@keyframes ctaSweep{
+  0%{ left:-160%; opacity:0; }
+  30%{ opacity:1; }
+  55%{ left:160%; opacity:1; }
+  100%{ left:160%; opacity:0; }
+}
+@keyframes floatGlow{
+  0%,100%{ transform:translateY(0); opacity:0.6; }
+  50%{ transform:translateY(-28px); opacity:1; }
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .hero-home{
+    grid-template-columns:1fr;
+    text-align:center;
+    padding:145px 6% 115px;
+  }
+
+  .hero-content h1{
+    font-size:36px;
+  }
+}
+</style>
+
+
+<!-- ABOUT SECTION -->
+<section class="about-flow2" id="about">
+
+  <h2 class="about-title">
+    About <span>Retrofit-First</span>
+  </h2>
+
+  <p class="about-intro">
+    Retrofit-First Feasibility Engine converts complex retrofit
+    standards into structured, compliant, decision-ready plans —
+    enabling safe, scalable decarbonisation of the UK housing stock.
+  </p>
+
+  <div class="flow2-wrap">
+
+    <!-- SHAPE 1 -->
+    <div class="flow2-card">
+      <div class="flow2-inner">
+        <h3>Founders & System Design</h3>
+        <p>
+          Founded by <strong>Avi Sharma</strong>, Retrofit-First is built
+          as a deterministic system rather than an advisory tool.
+          PAS-2035, building physics, and risk dependencies are
+          encoded directly into software logic.
+        </p>
+        <p>
+          <strong>Mohammed Junaid Syed</strong> contributes structural
+          engineering and on-site delivery insight, ensuring outputs
+          remain buildable, safe, and grounded in real-world constraints.
+        </p>
+      </div>
+    </div>
+
+    <!-- SHAPE 2 -->
+    <div class="flow2-card future">
+      <div class="flow2-inner">
+        <h3>Future Mode: Retrofit Intelligence</h3>
+        <p>
+          Retrofit-First is evolving into a decision infrastructure
+          for retrofit portfolios — supporting optimisation across
+          cost, carbon, sequencing, and funding alignment.
+        </p>
+        <p>
+          By learning from delivered outcomes, the platform compounds
+          accuracy over time, forming a trusted digital backbone
+          for long-term UK decarbonisation.
+        </p>
+        <span class="future-pill">FUTURE MODE</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+/* =========================
+   ABOUT – FLOWING ENERGY
+   ========================= */
+
+.about-flow2{
+  padding:140px 8%;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(34,197,94,0.22), transparent 45%),
+    radial-gradient(circle at 82% 28%, rgba(15,118,110,0.25), transparent 45%),
+    linear-gradient(180deg,#ffffff,#edf7f4);
+  position:relative;
+  overflow:hidden;
+}
+
+.about-title{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:26px;
+  color:#0f172a;
+}
+
+.about-title span{
+  color:#0f766e;
+}
+
+.about-intro{
+  max-width:880px;
+  margin:0 auto 90px;
+  font-size:19px;
+  line-height:1.9;
+  color:#334155;
+  text-align:center;
+}
+
+/* GRID */
+.flow2-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* CARD BASE */
+.flow2-card{
+  position:relative;
+  border-radius:60px 24px;
+  padding:3px;
+  overflow:hidden;
+  transition:0.6s ease;
+}
+
+/* FLOWING LIGHT (NOT SPIN) */
+.flow2-card::before{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-120%;
+  width:120%;
+  height:180%;
+  background:linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(34,197,94,0.9) 50%,
+    transparent 70%
+  );
+  animation:flowLight 1.5s ease-in-out infinite;
+}
+
+/* INNER SURFACE */
+.flow2-inner{
+  background:
+    radial-gradient(circle at top left,
+      rgba(34,197,94,0.18),
+      transparent 55%),
+    radial-gradient(circle at bottom right,
+      rgba(15,118,110,0.22),
+      transparent 55%),
+    #ffffff;
+  border-radius:56px 20px;
+  padding:50px 46px;
+  position:relative;
+  z-index:1;
+  transition:0.6s ease;
+}
+
+/* CONTENT */
+.flow2-inner h3{
+  font-size:23px;
+  margin-bottom:18px;
+  color:#0f172a;
+}
+
+.flow2-inner p{
+  font-size:16.9px;
+  line-height:1.85;
+  color:#475569;
+  margin-bottom:16px;
+}
+
+/* FUTURE TAG */
+.future-pill{
+  display:inline-block;
+  margin-top:16px;
+  padding:8px 20px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.6px;
+  background:rgba(34,197,94,0.18);
+  color:#15803d;
+  border:1px solid rgba(34,197,94,0.45);
+}
+
+/* INTERACTION */
+.flow2-card:hover .flow2-inner,
+.flow2-card.active .flow2-inner{
+  transform:translateY(-12px);
+  box-shadow:
+    0 45px 110px rgba(34,197,94,0.45),
+    inset 0 0 90px rgba(34,197,94,0.22);
+}
+
+/* FLOW ANIMATION */
+@keyframes flowLight{
+  0%{
+    left:-120%;
+    opacity:0;
+  }
+  30%{
+    opacity:1;
+  }
+  50%{
+    left:120%;
+    opacity:1;
+  }
+  100%{
+    left:120%;
+    opacity:0;
+  }
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .flow2-wrap{
+    grid-template-columns:1fr;
+  }
+  .about-title{
+    font-size:32px;
+  }
+}
+</style>
+
+<script>
+/* Touch support */
+document.querySelectorAll('.flow2-card').forEach(card=>{
+  card.addEventListener('touchstart',()=>{
+    card.classList.add('active');
+  });
+  card.addEventListener('touchend',()=>{
+    setTimeout(()=>card.classList.remove('active'),500);
+  });
+});
+</script>
+
+<!-- HOW IT WORKS -->
+<section class="how-flow" id="how">
+
+  <h2 class="how-title">
+    How <span>It Works</span>
+  </h2>
+
+  <p class="how-intro">
+    Retrofit-First converts an address into a PAS-2035 aligned,
+    whole-house feasibility plan using deterministic logic,
+    building physics, and risk-aware sequencing.
+  </p>
+
+  <div class="how-flow-grid">
+
+    <!-- STEP 1 -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="020.jpeg" alt="Address input">
+        <h4>1. Address Input</h4>
+        <p>Enter a single property or an entire housing portfolio.</p>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="030.jpeg" alt="Digital twin">
+        <h4>2. Digital Twin</h4>
+        <p>A lightweight building model is generated automatically.</p>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="040.jpeg" alt="Risk logic">
+        <h4>3. Risk Logic</h4>
+        <p>Moisture, ventilation, and sequencing constraints enforced.</p>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="050.jpeg" alt="Retrofit package">
+        <h4>4. Retrofit Package</h4>
+        <p>PAS-2035 compliant feasibility packs compiled.</p>
+      </div>
+    </div>
+
+    <!-- STEP 5 (NEW) -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="060.jpeg" alt="Portfolio optimisation">
+        <h4>5. Portfolio Optimisation</h4>
+        <p>Homes grouped by risk, cost, and delivery readiness.</p>
+      </div>
+    </div>
+
+    <!-- STEP 6 (NEW) -->
+    <div class="how-flow-card">
+      <div class="how-inner">
+        <img src="070.jpeg" alt="Audit ready outputs">
+        <h4>6. Audit-Ready Outputs</h4>
+        <p>Evidence, scopes, and reports ready for delivery.</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+/* =========================
+   HOW IT WORKS – FLOW MODEL
+   ========================= */
+
+.how-flow{
+  padding:140px 8%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34,197,94,0.2), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(15,118,110,0.22), transparent 45%),
+    linear-gradient(180deg,#ffffff,#edf7f4);
+  position:relative;
+  overflow:hidden;
+}
+
+.how-title{
+  text-align:center;
+  font-size:42px;
+  color:#0f172a;
+  margin-bottom:26px;
+}
+
+.how-title span{
+  color:#0f766e;
+}
+
+.how-intro{
+  max-width:860px;
+  margin:0 auto 90px;
+  font-size:19px;
+  line-height:1.9;
+  color:#334155;
+  text-align:center;
+}
+
+/* GRID */
+.how-flow-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:60px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* CARD */
+.how-flow-card{
+  position:relative;
+  padding:3px;
+  border-radius:60px 22px;
+  overflow:hidden;
+}
+
+/* travelling light */
+.how-flow-card::before{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-120%;
+  width:120%;
+  height:180%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(34,197,94,0.85) 50%,
+    transparent 70%
+  );
+  animation:flowLight 3.8s ease-in-out infinite;
+}
+
+/* INNER */
+.how-inner{
+  background:
+    radial-gradient(circle at top left,
+      rgba(34,197,94,0.18),
+      transparent 55%),
+    radial-gradient(circle at bottom right,
+      rgba(15,118,110,0.22),
+      transparent 55%),
+    #ffffff;
+  border-radius:56px 18px;
+  padding:38px 34px 44px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+  transition:0.6s ease;
+}
+
+.how-inner img{
+  width:100%;
+  max-width:300px;   /* ⬆️ increased */
+  height:220px;      /* ⬆️ increased */
+  object-fit:cover;
+  border-radius:22px;
+  margin-bottom:28px;
+}
+
+.how-inner h4{
+  font-size:20px;
+  color:#0f172a;
+  margin-bottom:12px;
+}
+
+.how-inner p{
+  font-size:16.5px;
+  line-height:1.7;
+  color:#475569;
+}
+
+/* HOVER / TOUCH */
+.how-flow-card:hover .how-inner,
+.how-flow-card.active .how-inner{
+  transform:translateY(-10px);
+  box-shadow:
+    0 40px 100px rgba(34,197,94,0.45),
+    inset 0 0 80px rgba(34,197,94,0.22);
+}
+
+/* ANIMATION */
+@keyframes flowLight{
+  0%{ left:-120%; opacity:0; }
+  30%{ opacity:1; }
+  50%{ left:120%; opacity:1; }
+  100%{ left:120%; opacity:0; }
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .how-title{
+    font-size:32px;
+  }
+}
+</style>
+
+<script>
+/* Touch glow */
+document.querySelectorAll('.how-flow-card').forEach(card=>{
+  card.addEventListener('touchstart',()=>{
+    card.classList.add('active');
+  });
+  card.addEventListener('touchend',()=>{
+    setTimeout(()=>card.classList.remove('active'),500);
+  });
+});
+</script>
+</section>
+
+<style>
+/* =========================
+   HOW IT WORKS – FLOW MODEL
+   ========================= */
+
+.how-flow{
+  padding:140px 8%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34,197,94,0.2), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(15,118,110,0.22), transparent 45%),
+    linear-gradient(180deg,#ffffff,#edf7f4);
+  position:relative;
+  overflow:hidden;
+}
+
+.how-title{
+  text-align:center;
+  font-size:42px;
+  color:#0f172a;
+  margin-bottom:26px;
+}
+
+.how-title span{
+  color:#0f766e;
+}
+
+.how-intro{
+  max-width:860px;
+  margin:0 auto 90px;
+  font-size:19px;
+  line-height:1.9;
+  color:#334155;
+  text-align:center;
+}
+
+/* GRID */
+.how-flow-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:60px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* CARD */
+.how-flow-card{
+  position:relative;
+  padding:3px;
+  border-radius:60px 22px;
+  overflow:hidden;
+}
+
+/* travelling light */
+.how-flow-card::before{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-120%;
+  width:120%;
+  height:180%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(34,197,94,0.85) 50%,
+    transparent 70%
+  );
+  animation:flowLight 3.8s ease-in-out infinite;
+}
+
+/* INNER */
+.how-inner{
+  background:
+    radial-gradient(circle at top left,
+      rgba(34,197,94,0.18),
+      transparent 55%),
+    radial-gradient(circle at bottom right,
+      rgba(15,118,110,0.22),
+      transparent 55%),
+    #ffffff;
+  border-radius:56px 18px;
+  padding:38px 34px 44px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+  transition:0.6s ease;
+}
+
+.how-inner img{
+  width:100%;
+  max-width:300px;   /* ⬆️ increased */
+  height:220px;      /* ⬆️ increased */
+  object-fit:cover;
+  border-radius:22px;
+  margin-bottom:28px;
+}
+
+.how-inner h4{
+  font-size:20px;
+  color:#0f172a;
+  margin-bottom:12px;
+}
+
+.how-inner p{
+  font-size:16.5px;
+  line-height:1.7;
+  color:#475569;
+}
+
+/* HOVER / TOUCH */
+.how-flow-card:hover .how-inner,
+.how-flow-card.active .how-inner{
+  transform:translateY(-10px);
+  box-shadow:
+    0 40px 100px rgba(34,197,94,0.45),
+    inset 0 0 80px rgba(34,197,94,0.22);
+}
+
+
+/* ANIMATION */
+@keyframes flowLight{
+  0%{ left:-120%; opacity:0; }
+  30%{ opacity:1; }
+  50%{ left:120%; opacity:1; }
+  100%{ left:120%; opacity:0; }
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .how-title{
+    font-size:32px;
+  }
+}
+</style>
+
+<script>
+/* Touch glow */
+document.querySelectorAll('.how-flow-card').forEach(card=>{
+  card.addEventListener('touchstart',()=>{
+    card.classList.add('active');
+  });
+  card.addEventListener('touchend',()=>{
+    setTimeout(()=>card.classList.remove('active'),500);
+  });
+});
+</script>
+</section>
+
+<!-- PLATFORM FEATURES -->
+<section class="features-flow" id="features">
+
+  <h2 class="section-title">
+    Platform <span>Features</span>
+  </h2>
+
+  <p class="section-intro">
+    Retrofit-First provides a structured feasibility engine
+    designed to operate safely at both individual property
+    and portfolio scale — without reliance on subjective judgement.
+  </p>
+
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-inner">
+        <h4>Whole-House Sequencing</h4>
+        <p>
+          Fabric-first, no-regrets sequencing logic ensures measures are ordered safely and efficiently across the entire building, reducing performance risk and rework.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-inner">
+        <h4>Moisture Risk Prevention</h4>
+        <p>
+         Retrofit pathways that introduce moisture or ventilation risk are automatically blocked before they reach delivery, ensuring only safe, compliant measures progress.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-inner">
+        <h4>Portfolio-Scale Planning</h4>
+        <p>
+          Apply consistent logic across thousands of homes while retaining property-level auditability, full traceability, and supporting evidence throughout delivery.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- WHY AI MATTERS -->
+<section class="ai-flow" id="ai">
+
+  <div class="ai-wrap">
+
+    <h2 class="section-title">
+      Why <span>AI Matters</span>
+    </h2>
+
+    <p class="ai-text">
+      Retrofit-First applies artificial intelligence as a
+      governance and control layer, not as a black-box
+      prediction tool. AI is used to enforce standards,
+      sequencing rules, and risk dependencies consistently
+      across every retrofit assessment.
+    </p>
+
+    <p class="ai-text">
+      By learning from validated retrofit outcomes,
+      regulatory frameworks, and professional best
+      practice, the system improves decision accuracy
+      while maintaining full traceability, auditability,
+      and compliance at every stage.
+    </p>
+
+    <div class="ai-highlight">
+      AI enables retrofit decisions to be structured,
+      repeatable, and defensible — by design.
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+/* =========================
+   SHARED SECTION STYLES
+   ========================= */
+
+.section-title{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:26px;
+  color:#0f172a;
+}
+
+.section-title span{
+  color:#0f766e;
+}
+
+.section-intro{
+  max-width:860px;
+  margin:0 auto 90px;
+  font-size:19px;
+  line-height:1.9;
+  color:#334155;
+  text-align:center;
+}
+
+/* =========================
+   FEATURES SECTION
+   ========================= */
+
+.features-flow{
+  padding:140px 8%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34,197,94,0.22), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(15,118,110,0.24), transparent 45%),
+    linear-gradient(180deg,#ffffff,#edf7f4);
+  position:relative;
+  overflow:hidden;
+}
+
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:60px;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* FEATURE CARD */
+.feature-card{
+  position:relative;
+  padding:3px;
+  border-radius:60px 22px;
+  overflow:hidden;
+}
+
+/* travelling light */
+.feature-card::before{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-120%;
+  width:120%;
+  height:180%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(34,197,94,0.85),
+    transparent 70%
+  );
+  animation:flowLight 3.8s ease-in-out infinite;
+}
+
+/* INNER */
+.feature-inner{
+  background:
+    radial-gradient(circle at top left,
+      rgba(34,197,94,0.18),
+      transparent 55%),
+    radial-gradient(circle at bottom right,
+      rgba(15,118,110,0.22),
+      transparent 55%),
+    #ffffff;
+  border-radius:56px 18px;
+  padding:44px 40px;
+  position:relative;
+  z-index:1;
+  transition:0.6s ease;
+}
+
+.feature-inner h4{
+  font-size:21px;
+  margin-bottom:14px;
+  color:#0f172a;
+}
+
+.feature-inner p{
+  font-size:16.8px;
+  line-height:1.8;
+  color:#475569;
+}
+
+/* HOVER */
+.feature-card:hover .feature-inner,
+.feature-card.active .feature-inner{
+  transform:translateY(-10px);
+  box-shadow:
+    0 40px 100px rgba(34,197,94,0.45),
+    inset 0 0 80px rgba(34,197,94,0.22);
+}
+
+/* =========================
+   AI SECTION
+   ========================= */
+
+.ai-flow{
+  padding:120px 8% 70px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,197,94,0.25), transparent 55%),
+    linear-gradient(180deg,#edf7f4,#ffffff);
+  position:relative;
+  overflow:hidden;
+}
+
+.ai-wrap{
+  max-width:900px;
+  margin:auto;
+  text-align:center;
+  background:
+    radial-gradient(circle at center,
+      rgba(34,197,94,0.18),
+      transparent 60%);
+  padding:70px 60px;
+  border-radius:70px;
+}
+
+.ai-text{
+  font-size:19px;
+  line-height:1.5;
+  color:#334155;
+  margin-bottom:26px;
+}
+
+.ai-highlight{
+  margin-top:10px;
+  font-size:20px;
+  font-style:italic;
+  color:#0f766e;
+}
+.ai-highlight{
+  margin-bottom:0;
+  line-height:1.5;
+}
+/* =========================
+   ANIMATIONS
+   ========================= */
+
+@keyframes flowLight{
+  0%{ left:-120%; opacity:0; }
+  30%{ opacity:1; }
+  50%{ left:120%; opacity:1; }
+  100%{ left:120%; opacity:0; }
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .section-title{
+    font-size:32px;
+  }
+  .ai-wrap{
+    padding:50px 36px;
+  }
+}
+</style>
+
+<script>
+/* Touch glow support */
+document.querySelectorAll('.feature-card').forEach(card=>{
+  card.addEventListener('touchstart',()=>{
+    card.classList.add('active');
+  });
+  card.addEventListener('touchend',()=>{
+    setTimeout(()=>card.classList.remove('active'),500);
+  });
+});
+</script>
+
+<!-- START PILOT SECTION -->
+<section id="pilot-contact">
+
+<style>
+:root{
+  --primary:#0f766e;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --text:#0f172a;
+  --muted:#475569;
+  --white:#ffffff;
+  --border:#e5e7eb;
+}
+
+/* ===============================
+   SECTION BASE
+   =============================== */
+
+#pilot-contact{
+  padding:170px 8% 60px;   /* ↓ reduce bottom space */
+  background:var(--bg);
+  font-family:Arial, Helvetica, sans-serif;
+  position:relative;
+  overflow:hidden;
+  color:var(--text);
+}
+
+/* AI HIGHLIGHT – STATIC LIGHTING */
+.ai-highlight{
+  margin-top:48px;
+  padding:28px 34px;
+  line-height:1.6;
+  font-size:20px;
+  font-weight:600;
+  color:var(--secondary);
+  text-align:center;
+
+  /* subtle static glow */
+  background:
+    radial-gradient(circle at center,
+      rgba(34,197,94,0.18),
+      transparent 65%
+    );
+
+  border-left:4px solid var(--primary);
+  border-right:4px solid var(--accent);
+
+  box-shadow:
+    0 0 40px rgba(34,197,94,0.35),
+    inset 0 0 30px rgba(15,118,110,0.12);
+
+  border-radius:12px;
+}
+
+
+
+
+/* ===============================
+   CONTENT
+   =============================== */
+/* ===============================
+   STATIC HOMEPAGE LIGHTING
+   =============================== */
+
+#pilot-contact{
+  background:
+    radial-gradient(circle at 50% 0%,
+      rgba(34,197,94,0.18),
+      transparent 55%
+    ),
+    radial-gradient(circle at 15% 70%,
+      rgba(15,118,110,0.14),
+      transparent 45%
+    ),
+    radial-gradient(circle at 85% 75%,
+      rgba(34,197,94,0.14),
+      transparent 45%
+    ),
+    var(--bg);
+}
+
+.pilot-content{
+  position:relative;
+  max-width:1100px;
+  margin:auto;
+  text-align:center;
+  opacity:0;
+  transform:translateY(30px);
+  transition:1s ease;
+}
+
+.pilot-content.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* EYEBROW */
+.pilot-eyebrow{
+  display:inline-block;
+  padding:8px 18px;
+  border-radius:999px;
+  background:rgba(15,118,110,0.14);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:var(--primary);
+  margin-bottom:26px;
+}
+
+/* HEADING */
+.pilot-content h2{
+  font-size:56px;
+  line-height:1.15;
+  margin-bottom:28px;
+  color:var(--secondary);
+  max-width:860px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* DIVIDER */
+.pilot-divider{
+  width:140px;
+  height:4px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  margin:34px auto 50px;
+  border-radius:4px;
+}
+
+/* TEXT */
+.pilot-content p{
+  font-size:20px;
+  line-height:1.9;
+  color:var(--muted);
+  max-width:900px;
+  margin:0 auto 26px;
+}
+
+.pilot-sub{
+  font-size:19px;
+  margin-bottom:70px;
+}
+
+/* ===============================
+   CTA BUTTON – GREEN LIGHTING
+   =============================== */
+
+.pilot-actions{
+  display:flex;
+  justify-content:center;
+}
+
+/* BUTTON */
+.pilot-btn{
+  position:relative;
+  padding:22px 86px;
+  border-radius:999px;
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--accent)
+  );
+  color:var(--white);
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:0.6px;
+  text-decoration:none;
+  overflow:hidden;
+
+  box-shadow:
+    0 22px 55px rgba(15,118,110,0.45),
+    0 0 140px rgba(34,197,94,0.85);
+
+  animation:ctaPulse 3s ease-in-out infinite;
+  transition:0.4s ease;
+}
+
+/* BUTTON GREEN LIGHT SWEEP */
+.pilot-btn::after{
+  content:"";
+  position:absolute;
+  top:-35%;
+  left:-160%;
+  width:75%;
+  height:170%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(34,197,94,0.85),
+    transparent
+  );
+  animation:btnSweep 1.8s ease-in-out infinite;
+}
+
+/* HOVER */
+.pilot-btn:hover{
+  transform:translateY(-6px) scale(1.05);
+  box-shadow:
+    0 60px 200px rgba(34,197,94,1),
+    0 0 260px rgba(34,197,94,1);
+}
+
+/* FOOTER */
+.pilot-footer{
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* ===============================
+   ANIMATIONS
+   =============================== */
+
+@keyframes ambientFloat{
+  0%,100%{transform:translate(0,0);}
+  50%{transform:translate(-35px,30px);}
+}
+
+@keyframes centerGlow{
+  0%,100%{
+    opacity:0.45;
+    transform:translateX(-50%) scaleY(0.95);
+  }
+  50%{
+    opacity:0.8;
+    transform:translateX(-50%) scaleY(1.05);
+  }
+}
+
+@keyframes btnSweep{
+  0%{left:-160%; opacity:0;}
+  35%{opacity:1;}
+  55%{left:160%; opacity:1;}
+  100%{left:160%; opacity:0;}
+}
+
+@keyframes ctaPulse{
+  0%,100%{
+    box-shadow:
+      0 22px 55px rgba(15,118,110,0.45),
+      0 0 140px rgba(34,197,94,0.75);
+  }
+  50%{
+    box-shadow:
+      0 70px 240px rgba(34,197,94,1),
+      0 0 320px rgba(34,197,94,1);
+  }
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  #pilot-contact{
+    padding:130px 6% 100px;
+  }
+
+  .pilot-content h2{
+    font-size:36px;
+  }
+
+  .pilot-content p,
+  .pilot-sub{
+    font-size:17px;
+  }
+
+  .pilot-btn{
+    padding:18px 58px;
+    font-size:16px;
+  }
+
+  #pilot-contact::after{
+    width:140px;
+  }
+}
+footer{
+  margin:0;
+  padding:20px 0;   /* keep only what you need */
+}
+</style>
+
+<div class="pilot-content">
+
+  <div class="pilot-eyebrow">Pilot Programme</div>
+
+  <h2>Start a Retrofit Feasibility Pilot</h2>
+
+  <div class="pilot-divider"></div>
+
+  <p>
+    Retrofit-First works with housing associations, lenders,
+    and local authorities across the UK to modernise how
+    retrofit feasibility decisions are made.
+  </p>
+
+  <p class="pilot-sub">
+    Our pilots demonstrate how compliant, auditable feasibility
+    can be delivered in minutes — supporting confident,
+    real-world delivery.
+  </p>
+
+  <div class="pilot-actions">
+    <a
+      class="pilot-btn"
+      href="mailto:retrofitfirst@gmail.com?subject=Pilot%20Enquiry"
+    >
+      Start a Conversation
+    </a>
+  </div>
+
+  <div class="pilot-footer">
+    © 2026 Retrofit-First Feasibility Engine · United Kingdom
+  </div>
+
+</div>
+
+<script>
+/* Fade-in on scroll */
+const pilotContent = document.querySelector('.pilot-content');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{ threshold:0.3 });
+
+observer.observe(pilotContent);
+</script>
+
+</section>
+<!-- END PILOT CONTACT -->
+
+
+
+
+
+</body>
+</html>
