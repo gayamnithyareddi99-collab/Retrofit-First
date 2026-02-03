@@ -97,16 +97,80 @@ body{
   color:var(--muted);
 }
 
-.cta{
-  margin-top:30px;
-  padding:16px 42px;
-  background:var(--secondary);
-  color:var(--white);
-  border:none;
+/* =========================
+   HERO CTA – NEW LIGHT MODEL
+   ========================= */
+
+.hero-cta{
+  margin-top:46px;
+  padding:18px 60px;
   border-radius:999px;
-  font-weight:700;
+  background:#0f172a;
+  color:#ffffff;
+  font-size:16.8px;
+  font-weight:800;
+  letter-spacing:0.6px;
   cursor:pointer;
-  box-shadow:0 18px 40px rgba(15,23,42,0.35);
+  position:relative;
+  overflow:hidden;
+  border:none;
+
+  box-shadow:
+    0 20px 60px rgba(15,23,42,0.45);
+
+  transition:0.45s ease;
+}
+
+/* diagonal travelling ribbon */
+.hero-cta::before{
+  content:"";
+  position:absolute;
+  top:-120%;
+  left:-30%;
+  width:160%;
+  height:160%;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(34,197,94,0.85) 50%,
+    transparent 65%
+  );
+  transform:rotate(0deg);
+  animation:ctaRibbon 2.6s ease-in-out infinite;
+}
+
+/* inner glow layer */
+.hero-cta::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    circle at center,
+    rgba(34,197,94,0.35),
+    transparent 65%
+  );
+  opacity:0.6;
+}
+
+.hero-cta span{
+  position:relative;
+  z-index:2;
+}
+
+/* hover */
+.hero-cta:hover{
+  transform:translateY(-4px) scale(1.05);
+  background:#0f766e;
+  box-shadow:
+    0 40px 120px rgba(34,197,94,0.75);
+}
+
+/* animation */
+@keyframes ctaRibbon{
+  0%{ transform:translateY(-120%) rotate(0deg); opacity:0; }
+  30%{ opacity:1; }
+  50%{ transform:translateY(120%) rotate(0deg); opacity:1; }
+  100%{ transform:translateY(120%) rotate(0deg); opacity:0; }
 }
 
 .hero-image{
@@ -310,13 +374,19 @@ document.addEventListener("DOMContentLoaded",()=>{
       For Real UK Housing, Not Assumptions
     </h1>
 
-    <p class="hero-lead">
-      Retrofit-First is a decision intelligence platform that turns
-      complex retrofit standards into clear, auditable plans.
-      Generate PAS-2035 aligned, whole-house feasibility outputs
-      in minutes built for UK assessors, councils, housing
-      associations, and lenders working at scale.
-    </p>
+   <p class="hero-lead">
+  Retrofit-First is a decision intelligence platform that
+  converts complex retrofit standards into clear,
+  auditable, and delivery-ready plans.
+  Generate PAS-2035 aligned, whole-house feasibility
+  outputs in minutes built for UK assessors, councils,
+  housing associations, and lenders operating at scale.
+</p>
+<p class="hero-sub">
+  Deterministic logic. Risk-aware sequencing.
+  Evidence you can stand behind.
+</p>
+
 
 
     <button class="hero-cta">
@@ -588,7 +658,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   <p class="about-intro">
     Retrofit-First Feasibility Engine converts complex retrofit
-    standards into structured, compliant, decision-ready plans —
+    standards into structured, compliant, decision-ready plans
     enabling safe, scalable decarbonisation of the UK housing stock.
   </p>
 
@@ -599,16 +669,25 @@ document.addEventListener("DOMContentLoaded",()=>{
       <div class="flow2-inner">
         <h3>Founders & System Design</h3>
         <p>
-          Founded by <strong>Avi Sharma</strong>, Retrofit-First is built
-          as a deterministic system rather than an advisory tool.
-          PAS-2035, building physics, and risk dependencies are
-          encoded directly into software logic.
-        </p>
-        <p>
-          <strong>Mohammed Junaid Syed</strong> contributes structural
-          engineering and on-site delivery insight, ensuring outputs
-          remain buildable, safe, and grounded in real-world constraints.
-        </p>
+  Founded by <strong>Avi Sharma</strong>, Retrofit-First is designed
+  as a deterministic system rather than an advisory tool.
+  PAS-2035 requirements, building physics, and risk dependencies
+  are encoded directly into executable software logic.
+</p>
+
+<p>
+  <strong>Mohammed Junaid Syed</strong> brings structural engineering
+  and on-site delivery expertise, ensuring outputs remain
+  buildable, safe, and aligned with real-world construction
+  and retrofit constraints.
+</p>
+<p>
+  Together, this experience ensures Retrofit-First translates
+  standards into decisions that are practical, defensible,
+  and scalable across real UK housing stock.
+</p>
+
+     
       </div>
     </div>
 
@@ -617,15 +696,24 @@ document.addEventListener("DOMContentLoaded",()=>{
       <div class="flow2-inner">
         <h3>Future Mode: Retrofit Intelligence</h3>
         <p>
-          Retrofit-First is evolving into a decision infrastructure
-          for retrofit portfolios — supporting optimisation across
-          cost, carbon, sequencing, and funding alignment.
-        </p>
-        <p>
-          By learning from delivered outcomes, the platform compounds
-          accuracy over time, forming a trusted digital backbone
-          for long-term UK decarbonisation.
-        </p>
+  Retrofit-First is evolving into a decision infrastructure
+  for retrofit portfolios supporting optimisation across
+  cost, carbon, sequencing, and funding alignment.
+</p>
+
+<p>
+  By learning from delivered outcomes, the platform compounds
+  accuracy over time, forming a trusted digital backbone
+  for long-term UK decarbonisation.
+</p>
+
+<p>
+  This enables housing providers and lenders to move from
+  project-by-project assessments to portfolio-level planning,
+  with consistent logic, transparent assumptions, and
+  evidence that remains defensible over time.
+</p>
+
         <span class="future-pill">FUTURE MODE</span>
       </div>
     </div>
@@ -1033,6 +1121,62 @@ document.querySelectorAll('.how-flow-card').forEach(card=>{
   position:relative;
   overflow:hidden;
 }
+.how-inner img{
+  width:100%;
+  max-width:300px;
+  height:220px;
+  object-fit:cover;
+  border-radius:22px;
+  margin-bottom:28px;
+
+  /* NEW BORDER */
+  border:3px solid #0f766e;
+
+  /* subtle glow */
+  box-shadow:
+    0 0 0 6px rgba(15,118,110,0.15),
+    0 18px 45px rgba(15,118,110,0.35);
+}
+.how-flow-card{
+  position:relative;
+  padding:3px;
+  border-radius:60px 22px;
+  overflow:hidden;
+
+  /* NEW CARD BORDER */
+  border:2px solid rgba(15,118,110,0.55);
+}
+.how-flow-card:hover,
+.how-flow-card.active{
+  border-color:#0f766e;
+}
+/* FULL DARK CARD ON HOVER / TOUCH */
+.how-flow-card:hover .how-inner,
+.how-flow-card.active .how-inner{
+  background:#0f766e;
+  transform:translateY(-10px);
+
+  box-shadow:
+    0 40px 100px rgba(15,118,110,0.55);
+
+  transition:0.5s ease;
+}
+/* FULL DARK CARD ON HOVER / TOUCH */
+.how-flow-card:hover .how-inner,
+.how-flow-card.active .how-inner{
+  background:#c7fffb;
+  transform:translateY(-10px);
+
+  box-shadow:
+    0 40px 100px rgba(8, 66, 61, 0.55);
+
+  transition:0.5s ease;
+}
+/* IMAGE ADJUST ON DARK CARD */
+.how-flow-card:hover .how-inner img,
+.how-flow-card.active .how-inner img{
+  filter:brightness(1.05) contrast(1.05);
+}
 
 .how-title{
   text-align:center;
@@ -1170,13 +1314,13 @@ document.querySelectorAll('.how-flow-card').forEach(card=>{
 <section class="features-flow" id="features">
 
   <h2 class="section-title">
-    Platform <span>Features</span>
+     <span>Features</span>
   </h2>
 
   <p class="section-intro">
     Retrofit-First provides a structured feasibility engine
     designed to operate safely at both individual property
-    and portfolio scale — without reliance on subjective judgement.
+    and portfolio scale without reliance on subjective judgement.
   </p>
 
   <div class="features-grid">
@@ -1711,6 +1855,20 @@ document.querySelectorAll('.feature-card').forEach(card=>{
   }
 }
 footer{
+  background:#0f766e;              /* dark green */
+  color:#e6fffa;                   /* soft readable text */
+  text-align:center;
+  padding:22px;
+  font-size:14px;
+}
+.pilot-footer{
+  background:#0f766e;
+  color:#e6fffa;
+  padding:22px 0;
+  margin-top:60px;
+}
+
+footer{
   margin:0;
   padding:20px 0;   /* keep only what you need */
 }
@@ -1732,17 +1890,30 @@ footer{
 
   <p class="pilot-sub">
     Our pilots demonstrate how compliant, auditable feasibility
-    can be delivered in minutes — supporting confident,
+    can be delivered in minutes supporting confident,
     real-world delivery.
   </p>
 
   <div class="pilot-actions">
     <a
-      class="pilot-btn"
-      href="mailto:retrofitfirst@gmail.com?subject=Pilot%20Enquiry"
-    >
-      Start a Conversation
-    </a>
+  class="pilot-btn"
+  href="mailto:retrofitfirst@gmail.com
+  ?subject=Pilot%20Enquiry
+  &body=Hello%20Retrofit-First%20Team,%0D%0A%0D%0A
+  We%20are%20interested%20in%20exploring%20a%20Retrofit-First%20feasibility%20pilot%20for%20our%20housing%20stock.%0D%0A%0D%0A
+  Please%20let%20us%20know%20the%20next%20steps,%20pilot%20requirements,%20and%20indicative%20timelines.%0D%0A%0D%0A
+  Organisation:%0D%0A
+  Contact%20Name:%0D%0A
+  Role:%0D%0A
+  Email:%0D%0A
+  Phone:%0D%0A
+  Portfolio%20Size%20(approx):%0D%0A%0D%0A
+  Kind%20regards,%0D%0A
+  "
+>
+  Start a Conversation
+</a>
+
   </div>
 
   <div class="pilot-footer">
